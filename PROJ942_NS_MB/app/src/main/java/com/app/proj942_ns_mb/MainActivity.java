@@ -1,19 +1,91 @@
 package com.app.proj942_ns_mb;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+import android.util.Log;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    public Button       buttonTakePhoto;
+    static final int    CAMERA_PIC_REQUEST = 001;
+    private ImageView   mImageView;
+    private String      mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.buttonTakePhoto  = (Button)this.findViewById(R.id.buttonTakePhoto);
+
+        buttonTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Vous allez prendre une photo !", Toast.LENGTH_LONG).show();
+                dispatchTakePictureIntent();
+            }
+        });
     }
 
+    private void dispatchTakePictureIntent(){
+        Intent takePictureIntent    = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+
+            File photoFile          = null;
+            try {
+                photoFile = createImageFile();
+            }
+            catch (IOException ex){
+                ex.printStackTrace();
+            }
+
+            if(photoFile != null) {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, CAMERA_PIC_REQUEST);
+            }
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == CAMERA_PIC_REQUEST){
+            ImageView image = (ImageView) findViewById(R.id.imageViewPhoto);
+            image.setImageURI(Uri.parse(mCurrentPhotoPath));
+
+        }
+    }
+
+    private File createImageFile() throws IOException{
+        //Create an image file name
+
+
+        String timeStamp        = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName    = "JPEG_" + timeStamp ;
+
+        File storageDir         = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        Log.d("DEBUG", storageDir.toString());
+        File image              = File.createTempFile(imageFileName, ".jpg", storageDir);
+        Log.d("Debug",image.toString());
+
+        //Save a file
+        mCurrentPhotoPath       = "file." + image.getAbsolutePath();
+        return image;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
