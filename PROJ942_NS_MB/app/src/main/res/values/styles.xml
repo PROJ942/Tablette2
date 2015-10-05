@@ -5,4 +5,13 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- Define colors for the application -->
+  <!--  <color name="color_Background_Layout"></color>
+    <color name="color_Background_Button"></color>
+    <color name="color_Background_ImageView"></color>
+
+
+    <color name="color_Text_Title"></color>
+    <color name="color_Text_Body">#000000</color>
+    <color name="color_Text_Button"></color>-->
 </resources>

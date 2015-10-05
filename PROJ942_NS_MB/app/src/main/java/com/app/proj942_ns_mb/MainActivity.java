@@ -1,10 +1,10 @@
 package com.app.proj942_ns_mb;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     public Button       buttonTakePhoto;
     static final int    CAMERA_PIC_REQUEST = 001;
@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.buttonTakePhoto  = (Button)this.findViewById(R.id.buttonTakePhoto);
+        this.buttonTakePhoto  = (Button)this.findViewById(R.id.button_TakePicture);
 
         buttonTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == CAMERA_PIC_REQUEST){
-            ImageView image = (ImageView) findViewById(R.id.imageViewPhoto);
+            ImageView image = (ImageView) findViewById(R.id.imageView_Picture);
             image.setImageURI(Uri.parse(mCurrentPhotoPath));
 
         }

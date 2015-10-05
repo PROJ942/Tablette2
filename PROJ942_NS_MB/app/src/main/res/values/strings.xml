@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">PROJ942_NS_MB</string>
 
-    <string name="hello_world">Hello world!</string>
+	<!-- String for TextView -->
+    <string name="App_Title">Reconnaissance de visages</string>
+	<string name="App_Description">Prenez une photo puis envoyer-la au serveur pour voir si vous êtes déjà dans la base de données !</string>
     <string name="action_settings">Settings</string>
+	
+	<!-- Strings for buttons -->
+	<string name="buttonText_TakePicture">Prendre une nouvelle photo</string>
+	<string name="buttonText_LogInTest">Test connexion</string>
+	<string name="buttonText_SendPicture">Envoyer la photo</string>
+
+	<!-- Strings for hints -->
+	<string name="hint_Address">Adresse du serveur</string>
+	
+	
 </resources>

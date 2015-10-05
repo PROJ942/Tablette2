@@ -1,31 +1,77 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+	tools:context=".MainActivity"
+	android:orientation="vertical"
+    android:id="@+id/layout_Main"    >
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView
+		android:text="@string/App_Title"
+		android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:id="@+id/textView_Title"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/size_TextView_Title"
+        android:textStyle="bold|italic"/>
 
-    <Button
-        android:layout_width="wrap_content"
+    <TextView
+		android:text="@string/App_Description"
+		android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Photo"
-        android:id="@+id/buttonTakePhoto"
-        android:layout_below="@+id/textView"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_marginTop="72dp" />
+        android:id="@+id/textView_Description"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/size_TextView_Body"/>
+
+	<Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/buttonText_TakePicture"
+        android:id="@+id/button_TakePicture"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/size_TextView_Button"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageViewPhoto"
-        android:layout_below="@+id/buttonTakePhoto"
-        android:layout_alignRight="@+id/buttonTakePhoto"
-        android:layout_alignEnd="@+id/buttonTakePhoto"
-        android:layout_marginTop="72dp" />
+        android:id="@+id/imageView_Picture"
+        android:background="#b1dcff"
+        android:padding="@dimen/activity_horizontal_margin"/>
 
-</RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_Address">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_Address"
+            android:hint="@string/hint_Address"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/size_TextView_Body"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_LogInTest"
+            android:text="@string/buttonText_LogInTest"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/size_TextView_Button"
+            android:textColor="#010001" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_SendPicture"
+        android:text="@string/buttonText_SendPicture"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/size_TextView_Button"/>
+</LinearLayout>
