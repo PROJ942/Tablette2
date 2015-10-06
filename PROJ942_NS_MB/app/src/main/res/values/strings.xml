@@ -3,7 +3,7 @@
 
 	<!-- String for TextView -->
     <string name="App_Title">Reconnaissance de visages</string>
-	<string name="App_Description">Prenez une photo puis envoyer-la au serveur pour voir si vous êtes déjà dans la base de données !</string>
+	<string name="App_Description">Prenez une photo puis envoyez-la au serveur pour voir si vous êtes déjà dans la base de données !</string>
     <string name="action_settings">Settings</string>
 	
 	<!-- Strings for buttons -->

@@ -37,11 +37,13 @@
         android:textSize="@dimen/size_TextView_Button"/>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
         android:id="@+id/imageView_Picture"
-        android:background="#b1dcff"
-        android:padding="@dimen/activity_horizontal_margin"/>
+        android:background="#e1e1e1"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true" />
 
     <LinearLayout
         android:orientation="horizontal"

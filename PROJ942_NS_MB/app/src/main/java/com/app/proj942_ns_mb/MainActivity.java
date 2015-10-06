@@ -1,7 +1,12 @@
 package com.app.proj942_ns_mb;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -33,6 +38,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         this.buttonTakePhoto  = (Button)this.findViewById(R.id.button_TakePicture);
+        this.mImageView = (ImageView)this.findViewById(R.id.imageView_Picture);
 
         buttonTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,26 +70,25 @@ public class MainActivity extends Activity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == CAMERA_PIC_REQUEST){
-            ImageView image = (ImageView) findViewById(R.id.imageView_Picture);
-            image.setImageURI(Uri.parse(mCurrentPhotoPath));
-
+            ImageView mImageView = (ImageView) findViewById(R.id.imageView_Picture);
+            Bitmap bMap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+            mImageView.setImageBitmap(bMap);
         }
     }
 
     private File createImageFile() throws IOException{
         //Create an image file name
 
-
         String timeStamp        = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName    = "JPEG_" + timeStamp ;
-
         File storageDir         = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         Log.d("DEBUG", storageDir.toString());
-        File image              = File.createTempFile(imageFileName, ".jpg", storageDir);
+        File image              = new File(storageDir, imageFileName+".jpg");
         Log.d("Debug",image.toString());
 
+
         //Save a file
-        mCurrentPhotoPath       = "file." + image.getAbsolutePath();
+        mCurrentPhotoPath       = image.getAbsolutePath();
         return image;
     }
 
