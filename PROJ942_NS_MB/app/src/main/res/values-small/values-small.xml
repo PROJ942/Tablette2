@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">6dp</dimen>
+    <dimen name="activity_vertical_margin">6dp</dimen>
+
+    <!-- Size for padding -->
+    <dimen name="padding_small">5dp</dimen>
+
+    <!-- Size for texts -->
+    <dimen name="size_TextView_Title">20dp</dimen>
+    <dimen name="size_TextView_Body">12dp</dimen>
+    <dimen name="size_TextView_Button">12dp</dimen>
+
+    <!-- Size for ImageView -->
+    <dimen name="size_height_ImageView">300dp</dimen>
+    <dimen name="size_width_ImageView">300dp</dimen>
+
+</resources>
