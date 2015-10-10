@@ -7,7 +7,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
 	tools:context=".MainActivity"
-    android:id="@+id/layout_Main_Scroll">
+    android:id="@+id/layout_Main_Scroll"
+    android:background="@color/color_Background_Layout">
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,58 +21,67 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView_Title"
             android:gravity="center"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/padding_small"
             android:textSize="@dimen/size_TextView_Title"
-            android:textStyle="bold|italic"/>
+            android:textStyle="bold|italic"
+            android:textColor="@color/color_Text_Title"
+            android:background="#6c7c94" />
 
         <TextView
             android:text="@string/App_Description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView_Description"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:textSize="@dimen/size_TextView_Body"/>
+            android:padding="@dimen/padding_small"
+            android:textSize="@dimen/size_TextView_Body"
+            android:textColor="@color/color_Text_Body"
+            android:gravity="center" />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/buttonText_TakePicture"
             android:id="@+id/button_TakePicture"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:textSize="@dimen/size_TextView_Button"/>
+            android:padding="@dimen/padding_small"
+            android:textSize="@dimen/size_TextView_Button"
+            android:background="@color/color_Background_Button"
+            android:textAlignment="center" />
 
         <ImageView
             android:layout_width="@dimen/size_width_ImageView"
             android:layout_height="@dimen/size_height_ImageView"
             android:id="@+id/imageView_Picture"
-            android:background="#e1e1e1"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:background="@color/color_Background_ImageView"
+            android:padding="@dimen/padding_small"
             android:layout_gravity="center"
             android:clickable="true"
-            android:layout_margin="@dimen/activity_horizontal_margin" />
+            android:layout_margin="@dimen/padding_small" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layout_Address">
+            android:id="@+id/layout_Address"
+            android:padding="@dimen/padding_small">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/editText_Address"
                 android:hint="@string/hint_Address"
-                android:padding="@dimen/activity_horizontal_margin"
-                android:textSize="@dimen/size_TextView_Body"/>
+                android:padding="@dimen/padding_small"
+                android:textSize="@dimen/size_TextView_Body"
+                android:textColor="@color/color_Text_Body"
+                android:foreground="@color/color_Text_Body" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/button_LogInTest"
                 android:text="@string/buttonText_LogInTest"
-                android:padding="@dimen/activity_horizontal_margin"
+                android:padding="@dimen/padding_small"
                 android:textSize="@dimen/size_TextView_Button"
-                android:textColor="#010001" />
+                android:background="@color/color_Background_Button" />
         </LinearLayout>
 
         <Button
@@ -79,7 +89,26 @@
             android:layout_height="wrap_content"
             android:id="@+id/button_SendPicture"
             android:text="@string/buttonText_SendPicture"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:textSize="@dimen/size_TextView_Button"/>
+            android:padding="@dimen/padding_small"
+            android:textSize="@dimen/size_TextView_Button"
+            android:background="@color/color_Background_Button"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_Result"
+            android:padding="@dimen/padding_small"
+            android:textSize="@dimen/size_TextView_Body"
+            android:textColor="@color/color_Text_Body" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_Path"
+            android:padding="@dimen/padding_small"
+            android:textSize="@dimen/size_TextView_Body"
+            android:textColor="@color/color_Text_Body"
+            android:visibility="invisible" />
     </LinearLayout>
 </ScrollView>

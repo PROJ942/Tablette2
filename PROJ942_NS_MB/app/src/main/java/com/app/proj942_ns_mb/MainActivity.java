@@ -1,23 +1,21 @@
 package com.app.proj942_ns_mb;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,17 +26,26 @@ import java.util.Date;
 public class MainActivity extends Activity {
 
     public Button       buttonTakePhoto;
+
+    private TextView    textView_Result;
+    private TextView    textView_Path;
+
     static final int    CAMERA_PIC_REQUEST = 001;
     private ImageView   mImageView;
     private String      mCurrentPhotoPath;
+
+    private int stageWidth, stageHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.buttonTakePhoto  = (Button)this.findViewById(R.id.button_TakePicture);
-        this.mImageView = (ImageView)this.findViewById(R.id.imageView_Picture);
+        this.textView_Path          = (TextView) this.findViewById(R.id.textView_Path);
+        this.textView_Result        = (TextView)this.findViewById(R.id.textView_Result);
+
+        this.buttonTakePhoto        = (Button)this.findViewById(R.id.button_TakePicture);
+        this.mImageView             = (ImageView)this.findViewById(R.id.imageView_Picture);
 
         buttonTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +56,31 @@ public class MainActivity extends Activity {
         });
     }
 
+    //Save the picture's path in order to reload the picture when the screen rotates
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Store the picture's path
+        CharSequence picturePath        = textView_Path.getText();
+        outState.putCharSequence("savedPicturePath", picturePath);
+    }
+
+    //Recover the picture's path and reload it
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        CharSequence picturePath        = savedInstanceState.getCharSequence("savedPicturePath");
+        textView_Path.setText(picturePath);
+
+        //Recover the picture's path and load the picture
+        mCurrentPhotoPath           = String.valueOf(textView_Path.getText());
+        Bitmap bMap                 = BitmapFactory.decodeFile(mCurrentPhotoPath);
+        mImageView.setImageBitmap(bMap);
+    }
+
+    //Method that take a picture
     private void dispatchTakePictureIntent(){
         Intent takePictureIntent    = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(takePictureIntent.resolveActivity(getPackageManager()) != null){
@@ -70,25 +102,29 @@ public class MainActivity extends Activity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == CAMERA_PIC_REQUEST){
-            ImageView mImageView = (ImageView) findViewById(R.id.imageView_Picture);
-            Bitmap bMap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+            ImageView mImageView    = (ImageView) findViewById(R.id.imageView_Picture);
+            Bitmap bMap             = BitmapFactory.decodeFile(mCurrentPhotoPath);
             mImageView.setImageBitmap(bMap);
         }
     }
 
+    //Method that save the picture
     private File createImageFile() throws IOException{
-        //Create an image file name
 
-        String timeStamp        = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName    = "JPEG_" + timeStamp ;
-        File storageDir         = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        //Create an image file name
+        String timeStamp            = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName        = "JPEG_" + timeStamp ;
+
+        //Define the storage location
+        File storageDir             = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         Log.d("DEBUG", storageDir.toString());
-        File image              = new File(storageDir, imageFileName+".jpg");
+        File image                  = new File(storageDir, imageFileName+".jpg");
         Log.d("Debug",image.toString());
 
-
-        //Save a file
+        //Save the file
         mCurrentPhotoPath       = image.getAbsolutePath();
+        textView_Path.setText(mCurrentPhotoPath);
+
         return image;
     }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PROJ942_NS_MB</string>
+    <string name="app_name">Reco visages</string>
 
 	<!-- String for TextView -->
     <string name="App_Title">Reconnaissance de visages</string>
@@ -12,7 +12,6 @@
 	<string name="buttonText_SendPicture">Envoyer la photo</string>
 
 	<!-- Strings for hints -->
-	<string name="hint_Address">Adresse du serveur</string>
-	
+	<string name="hint_Address">Adresse serveur</string>
 	
 </resources>

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Dimensions for large screens -->
+
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">15dp</dimen>
+    <dimen name="activity_vertical_margin">15dp</dimen>
 
     <!-- Size for padding -->
-    <dimen name="padding_small">16dp</dimen>
+    <dimen name="padding_small">15dp</dimen>
 
     <!-- Size for texts -->
     <dimen name="size_TextView_Title">40dp</dimen>
-    <dimen name="size_TextView_Body">30dp</dimen>
-    <dimen name="size_TextView_Button">30dp</dimen>
+    <dimen name="size_TextView_Body">32dp</dimen>
+    <dimen name="size_TextView_Button">32dp</dimen>
 
     <!-- Size for ImageView -->
-    <dimen name="size_height_ImageView">600dp</dimen>
-    <dimen name="size_width_ImageView">600dp</dimen>
+    <dimen name="size_height_ImageView">400dp</dimen>
+    <dimen name="size_width_ImageView">400dp</dimen>
 </resources>
