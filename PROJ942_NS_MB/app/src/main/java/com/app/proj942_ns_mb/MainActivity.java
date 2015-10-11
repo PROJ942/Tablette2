@@ -78,6 +78,7 @@ public class MainActivity extends Activity {
         mCurrentPhotoPath           = String.valueOf(textView_Path.getText());
         Bitmap bMap                 = BitmapFactory.decodeFile(mCurrentPhotoPath);
         mImageView.setImageBitmap(bMap);
+        mImageView.setRotation(90);
     }
 
     //Method that take a picture
@@ -105,6 +106,7 @@ public class MainActivity extends Activity {
             ImageView mImageView    = (ImageView) findViewById(R.id.imageView_Picture);
             Bitmap bMap             = BitmapFactory.decodeFile(mCurrentPhotoPath);
             mImageView.setImageBitmap(bMap);
+            mImageView.setRotation(90);
         }
     }
 
