@@ -1,10 +1,12 @@
 package com.app.proj942_ns_mb;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -17,15 +19,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
 public class MainActivity extends Activity {
 
     public Button       buttonTakePhoto;
+    public Button       buttonUploadPhoto;
 
     private TextView    textView_Result;
     private TextView    textView_Path;
@@ -33,8 +47,9 @@ public class MainActivity extends Activity {
     static final int    CAMERA_PIC_REQUEST = 001;
     private ImageView   mImageView;
     private String      mCurrentPhotoPath;
+    private String      ba_e;
 
-    private int stageWidth, stageHeight;
+    public static String URL = "http://192.168.164.1/uploads/server.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +60,7 @@ public class MainActivity extends Activity {
         this.textView_Result        = (TextView)this.findViewById(R.id.textView_Result);
 
         this.buttonTakePhoto        = (Button)this.findViewById(R.id.button_TakePicture);
+        this.buttonUploadPhoto      = (Button)this.findViewById(R.id.buttonUploadPhoto);
         this.mImageView             = (ImageView)this.findViewById(R.id.imageView_Picture);
 
         buttonTakePhoto.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +70,67 @@ public class MainActivity extends Activity {
                 dispatchTakePictureIntent();
             }
         });
+
+        buttonUploadPhoto.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                upload();
+            }
+        });
+    }
+
+    private void upload() {
+        //Image Location URL
+        Log.e("path","------------" + mCurrentPhotoPath);
+
+        //Image
+        Bitmap bmp = BitmapFactory.decodeFile(mCurrentPhotoPath);
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG,90,bao);
+        byte[] ba = bao.toByteArray();
+        ba_e = Base64.encodeBytes(ba);
+
+        Log.e("base64", "----" + ba_e);
+
+        //Upload image to server
+        new uploadToServer().execute();
+
+    }
+
+    public class uploadToServer extends AsyncTask<Void, Void, String> {
+        private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Image Uploading !");
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("base64", ba_e));
+            nameValuePairs.add(new BasicNameValuePair("ImageName", System.currentTimeMillis() + ".jpg"));
+            try {
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost(URL);
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                HttpResponse response = httpclient.execute(httppost);
+                String st = EntityUtils.toString(response.getEntity());
+                Log.v("log_tag", "In the try Loop" + st);
+
+            } catch (Exception e) {
+                Log.v("log_tag", "Error in http connection " + e.toString());
+            }
+            return "Success";
+
+        }
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            dialog.hide();
+            dialog.dismiss();
+        }
     }
 
     //Save the picture's path in order to reload the picture when the screen rotates

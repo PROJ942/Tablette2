@@ -87,7 +87,7 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button_SendPicture"
+            android:id="@+id/buttonUploadPhoto"
             android:text="@string/buttonText_SendPicture"
             android:padding="@dimen/padding_small"
             android:textSize="@dimen/size_TextView_Button"
