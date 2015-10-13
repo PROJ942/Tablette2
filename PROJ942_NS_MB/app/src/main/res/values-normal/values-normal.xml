@@ -16,6 +16,9 @@
     <dimen name="size_TextView_Button">22dp</dimen>
 
     <!-- Size for ImageView -->
-    <dimen name="size_height_ImageView">350dp</dimen>
+    <dimen name="size_height_ImageView">450dp</dimen>
     <dimen name="size_width_ImageView">350dp</dimen>
+
+    <!-- Size for EditText -->
+    <dimen name="size_width_EditText">60dp</dimen>
 </resources>

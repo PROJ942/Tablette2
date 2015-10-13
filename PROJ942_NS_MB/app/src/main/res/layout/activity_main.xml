@@ -1,12 +1,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-	tools:context=".MainActivity"
+    tools:context=".MainActivity"
     android:id="@+id/layout_Main_Scroll"
     android:background="@color/color_Background_Layout">
 
@@ -55,34 +55,102 @@
             android:padding="@dimen/padding_small"
             android:layout_gravity="center"
             android:clickable="true"
-            android:layout_margin="@dimen/padding_small" />
+            android:layout_margin="@dimen/padding_small"
+            android:scaleType="fitCenter" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/layout_Address"
-            android:padding="@dimen/padding_small">
+            android:padding="@dimen/padding_small"
+            android:gravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="@dimen/size_width_EditText"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText_Address"
-                android:hint="@string/hint_Address"
+                android:id="@+id/editText_Address_Byte1"
                 android:padding="@dimen/padding_small"
                 android:textSize="@dimen/size_TextView_Body"
-                android:textColor="@color/color_Text_Body"
-                android:foreground="@color/color_Text_Body" />
+                android:textColor="@color/color_Text_Default"
+                android:foreground="@color/color_Text_Body"
+                android:background="@color/color_Background_EditText"
+                android:layout_marginRight="@dimen/padding_small"
+                android:inputType="number"
+                android:lines="1"
+                android:numeric="integer"
+                android:maxLength="3"
+                android:imeOptions="actionNext"
+                android:text="@string/server_Byte_1" />
 
-            <Button
-                android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="@dimen/size_width_EditText"
                 android:layout_height="wrap_content"
-                android:id="@+id/button_LogInTest"
-                android:text="@string/buttonText_LogInTest"
+                android:id="@+id/editText_Address_Byte2"
                 android:padding="@dimen/padding_small"
-                android:textSize="@dimen/size_TextView_Button"
-                android:background="@color/color_Background_Button" />
+                android:textSize="@dimen/size_TextView_Body"
+                android:textColor="@color/color_Text_Default"
+                android:foreground="@color/color_Text_Body"
+                android:background="@color/color_Background_EditText"
+                android:layout_marginRight="@dimen/padding_small"
+                android:inputType="number"
+                android:lines="1"
+                android:numeric="integer"
+                android:maxLength="3"
+                android:imeOptions="actionNext"
+                android:text="@string/server_Byte_2" />
+
+            <EditText
+                android:layout_width="@dimen/size_width_EditText"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText_Address_Byte3"
+                android:padding="@dimen/padding_small"
+                android:textSize="@dimen/size_TextView_Body"
+                android:textColor="@color/color_Text_Default"
+                android:foreground="@color/color_Text_Body"
+                android:background="@color/color_Background_EditText"
+                android:layout_marginRight="@dimen/padding_small"
+                android:inputType="number"
+                android:lines="1"
+                android:numeric="integer"
+                android:maxLength="3"
+                android:imeOptions="actionNext"
+                android:text="@string/server_Byte_3" />
+
+            <EditText
+                android:layout_width="@dimen/size_width_EditText"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText_Address_Byte4"
+                android:padding="@dimen/padding_small"
+                android:textSize="@dimen/size_TextView_Body"
+                android:textColor="@color/color_Text_Default"
+                android:foreground="@color/color_Text_Body"
+                android:background="@color/color_Background_EditText"
+                android:layout_marginRight="@dimen/padding_small"
+                android:inputType="number"
+                android:lines="1"
+                android:numeric="integer"
+                android:maxLength="3"
+                android:imeOptions="actionDone"
+                android:text="@string/server_Byte_4" />
+
         </LinearLayout>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/server_php_File_Name"
+            android:id="@+id/editText_PHPFile"
+            android:layout_gravity="center_horizontal"
+            android:inputType="text"
+            android:singleLine="false"
+            android:lines="1"
+            android:padding="@dimen/padding_small"
+            android:textSize="@dimen/size_TextView_Body"
+            android:textColor="@color/color_Text_Default"
+            android:foreground="@color/color_Text_Body"
+            android:background="@color/color_Background_EditText"
+            android:layout_margin="@dimen/padding_small" />
 
         <Button
             android:layout_width="fill_parent"

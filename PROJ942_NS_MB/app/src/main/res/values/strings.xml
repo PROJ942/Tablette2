@@ -13,5 +13,22 @@
 
 	<!-- Strings for hints -->
 	<string name="hint_Address">Adresse serveur</string>
+
+	<!-- Strings for Toast popups -->
+	<string name="toast_TakePhoto">Vous allez prendre une photo !</string>
+	<string name="toast_Error_In_IP">Adresse IP invalide</string>
+	<string name="toast_Error_In_FileName">Nom fichier PHP invalide</string>
+	<string name="toast_Error_PHP_IP">Adresse IP et Nom fichier PHP invalides</string>
+	<string name="toast_Upload_File">Envoi de la photo</string>
+	<string name="toast_No_Picture">Aucune photo à envoyer.</string>
+
+	<!-- Strings for Server address -->
+	<string name="server_Byte_1">192</string>
+	<string name="server_Byte_2">168</string>
+	<string name="server_Byte_3">164</string>
+	<string name="server_Byte_4">1</string>
+	<string name="server_Prefix">http://</string>
+	<string name="server_Suffix">.php</string>
+	<string name="server_php_File_Name">uploads/server</string>
 	
 </resources>

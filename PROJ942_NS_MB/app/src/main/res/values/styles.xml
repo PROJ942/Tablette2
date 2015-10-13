@@ -10,9 +10,10 @@
     <color name="color_Background_Button">#7C8DBF</color>
     <color name="color_Background_ImageView">#95AAE5</color>
     <color name="color_Background_Title">#6c7c94</color>
-
+    <color name="color_Background_EditText">#FFFFFF</color>
 
     <color name="color_Text_Title">#FFFFFF</color>
     <color name="color_Text_Body">#A5BCFF</color>
     <color name="color_Text_Button">#000000</color>
+    <color name="color_Text_Default">#000000</color>
 </resources>
