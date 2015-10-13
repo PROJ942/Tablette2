@@ -47,8 +47,9 @@ public class MainActivity extends Activity {
     static final int    CAMERA_PIC_REQUEST = 001;
     private ImageView   mImageView;
     private String      mCurrentPhotoPath;
-    private String      ba_e;
+    private String      im_64;
 
+    // fixed URL for tests on XAMPP server
     public static String URL = "http://192.168.164.1/uploads/server.php";
 
     @Override
@@ -79,24 +80,26 @@ public class MainActivity extends Activity {
         });
     }
 
+    //Preparing image before uploading to server
     private void upload() {
         //Image Location URL
         Log.e("path","------------" + mCurrentPhotoPath);
 
-        //Image
+        //Converting image to base64
         Bitmap bmp = BitmapFactory.decodeFile(mCurrentPhotoPath);
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG,90,bao);
         byte[] ba = bao.toByteArray();
-        ba_e = Base64.encodeBytes(ba);
+        im_64 = Base64.encodeBytes(ba);
 
-        Log.e("base64", "----" + ba_e);
+        Log.e("base64", "----" + im_64);
 
         //Upload image to server
         new uploadToServer().execute();
 
     }
 
+    //Uploading Image to Server Using HTTPClient
     public class uploadToServer extends AsyncTask<Void, Void, String> {
         private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
 
@@ -109,7 +112,7 @@ public class MainActivity extends Activity {
         @Override
         protected String doInBackground(Void... params) {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("base64", ba_e));
+            nameValuePairs.add(new BasicNameValuePair("base64", im_64));
             nameValuePairs.add(new BasicNameValuePair("ImageName", System.currentTimeMillis() + ".jpg"));
             try {
                 HttpClient httpclient = new DefaultHttpClient();
