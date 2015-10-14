@@ -3,7 +3,7 @@
     package="com.app.proj942_ns_mb" >
 
     <uses-feature   android:name="android.hardware.camera"
-        android:required="true"/>
+                    android:required="true"/>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>

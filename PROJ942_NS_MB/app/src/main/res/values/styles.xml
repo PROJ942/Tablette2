@@ -5,13 +5,14 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <!-- Define colors for the application -->
+    <!-- Define background colors -->
     <color name="color_Background_Layout">#292F40</color>
     <color name="color_Background_Button">#7C8DBF</color>
     <color name="color_Background_ImageView">#95AAE5</color>
     <color name="color_Background_Title">#6c7c94</color>
     <color name="color_Background_EditText">#FFFFFF</color>
 
+    <!-- Define text colors -->
     <color name="color_Text_Title">#FFFFFF</color>
     <color name="color_Text_Body">#A5BCFF</color>
     <color name="color_Text_Button">#000000</color>
