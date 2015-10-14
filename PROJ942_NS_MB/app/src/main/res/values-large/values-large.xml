@@ -20,5 +20,7 @@
     <dimen name="size_width_ImageView">250dp</dimen>
 
     <!-- Size for EditText -->
-    <dimen name="size_width_EditText">100dp</dimen>
+    <dimen name="size_width_EditText_IP">100dp</dimen>
+    <dimen name="size_width_EditText_Name">400dp</dimen>
+
 </resources>

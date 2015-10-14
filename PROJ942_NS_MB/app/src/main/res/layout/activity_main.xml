@@ -82,7 +82,7 @@
                 android:gravity="center">
 
                 <EditText
-                    android:layout_width="@dimen/size_width_EditText"
+                    android:layout_width="@dimen/size_width_EditText_IP"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText_Address_Byte1"
                     android:padding="@dimen/padding_small"
@@ -99,7 +99,7 @@
                     android:text="@string/server_Byte_1" />
 
                 <EditText
-                    android:layout_width="@dimen/size_width_EditText"
+                    android:layout_width="@dimen/size_width_EditText_IP"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText_Address_Byte2"
                     android:padding="@dimen/padding_small"
@@ -116,7 +116,7 @@
                     android:text="@string/server_Byte_2" />
 
                 <EditText
-                    android:layout_width="@dimen/size_width_EditText"
+                    android:layout_width="@dimen/size_width_EditText_IP"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText_Address_Byte3"
                     android:padding="@dimen/padding_small"
@@ -133,7 +133,7 @@
                     android:text="@string/server_Byte_3" />
 
                 <EditText
-                    android:layout_width="@dimen/size_width_EditText"
+                    android:layout_width="@dimen/size_width_EditText_IP"
                     android:layout_height="wrap_content"
                     android:id="@+id/editText_Address_Byte4"
                     android:padding="@dimen/padding_small"
@@ -194,7 +194,48 @@
                 android:layout_marginBottom="@dimen/padding_small"
                 android:textColor="@color/color_Text_Body"
                 android:textSize="@dimen/size_TextView_Body" />
+
         </RadioGroup>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_Name">
+
+            <EditText
+                android:layout_width="@dimen/size_width_EditText_Name"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_First_Name"
+                android:id="@+id/editText_First_Name"
+                android:layout_gravity="center_horizontal"
+                android:inputType="text"
+                android:singleLine="false"
+                android:lines="1"
+                android:padding="@dimen/padding_small"
+                android:textSize="@dimen/size_TextView_Body"
+                android:textColor="@color/color_Text_Default"
+                android:foreground="@color/color_Text_Body"
+                android:background="@color/color_Background_EditText"
+                android:layout_margin="@dimen/padding_small" />
+
+            <EditText
+                android:layout_width="@dimen/size_width_EditText_Name"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_Last_Name"
+                android:id="@+id/editText_Last_Name"
+                android:layout_gravity="center_horizontal"
+                android:inputType="text"
+                android:singleLine="false"
+                android:lines="1"
+                android:padding="@dimen/padding_small"
+                android:textSize="@dimen/size_TextView_Body"
+                android:textColor="@color/color_Text_Default"
+                android:foreground="@color/color_Text_Body"
+                android:background="@color/color_Background_EditText"
+                android:layout_margin="@dimen/padding_small" />
+
+        </LinearLayout>
 
         <Button
             android:layout_width="fill_parent"

@@ -32,7 +32,7 @@ public class ToolBox {
      * @function : checkPHPFileName
      * @description : the string contain special characters
      */
-    public static boolean checkPHPFileName(String toTest){
+    public static boolean checkName(String toTest){
         //Declarations
         boolean         bResult      = false;
         char[]          tabFileName  = null;

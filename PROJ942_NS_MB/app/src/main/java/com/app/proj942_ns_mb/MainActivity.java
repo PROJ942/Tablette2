@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,18 +58,22 @@ public class MainActivity extends Activity {
     private EditText            editTextIPByte3 ;
     private EditText            editTextIPByte4 ;
     private EditText            editTextFileName;
+    private EditText            editTextLastName;
+    private EditText            editTextFirstName;
 
     private RadioGroup          radioGrp;
 
-    public Resources res;
+    public Resources            res;
 
     //Declaration for intern variables
     private String              mCurrentPhotoPath   = null;
     private String              im_64;
     private String              stPHPFile           = null;
+    private String              stFileName          = null;
     private String              stOrder             = null;
 
     private int                 iToast2Display      = 0;
+    private int                 iOrder              = 0;
 
     public static String        URL                 = null;
 
@@ -80,7 +85,8 @@ public class MainActivity extends Activity {
     private int                 iByte4IP_Value ;
 
     public boolean              bCheckResultIP ;
-    public boolean              bCheckResultStr ;
+    public boolean              bCheckResultSrv ;
+    public boolean              bCheckResultName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,12 +105,18 @@ public class MainActivity extends Activity {
         this.editTextIPByte3        = (EditText)this.findViewById(R.id.editText_Address_Byte3);
         this.editTextIPByte4        = (EditText)this.findViewById(R.id.editText_Address_Byte4);
         this.editTextFileName       = (EditText)this.findViewById(R.id.editText_PHPFile);
+        this.editTextFirstName      = (EditText)this.findViewById(R.id.editText_First_Name);
+        this.editTextLastName       = (EditText)this.findViewById(R.id.editText_Last_Name);
 
         this.mImageView             = (ImageView)this.findViewById(R.id.imageView_Picture);
 
         this.radioGrp               = (RadioGroup)this.findViewById(R.id.radioGrp);
 
         res                         = getResources();
+
+        //Hide EditText for name
+        editTextLastName.setVisibility(View.INVISIBLE);
+        editTextFirstName.setVisibility(View.INVISIBLE);
 
         /**
          * Launch the camera
@@ -125,21 +137,30 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 try {
                     //Recover each byte value of the IP
-                    iByte1IP_Value = Integer.parseInt(editTextIPByte1.getText().toString());
-                    iByte2IP_Value = Integer.parseInt(editTextIPByte2.getText().toString());
-                    iByte3IP_Value = Integer.parseInt(editTextIPByte3.getText().toString());
-                    iByte4IP_Value = Integer.parseInt(editTextIPByte4.getText().toString());
+                    iByte1IP_Value      = Integer.parseInt(editTextIPByte1.getText().toString());
+                    iByte2IP_Value      = Integer.parseInt(editTextIPByte2.getText().toString());
+                    iByte3IP_Value      = Integer.parseInt(editTextIPByte3.getText().toString());
+                    iByte4IP_Value      = Integer.parseInt(editTextIPByte4.getText().toString());
+
+                    //Build the file name depending on the order
+                    if(iOrder == 0){
+                        stFileName = String.valueOf(System.currentTimeMillis());
+                    }
+                    else{
+
+                        stFileName          = "Add_" + editTextFirstName.getText().toString() + "_" + editTextLastName.getText().toString();
+                        bCheckResultName    = ToolBox.checkName(stFileName);
+                    }
+
+                    Log.e("test", stFileName);
 
                     stPHPFile = editTextFileName.getText().toString();
 
-                    bCheckResultIP = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
-                    bCheckResultStr = ToolBox.checkPHPFileName(stPHPFile);
-
-                    bCheckResultIP = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
-                    bCheckResultStr = ToolBox.checkPHPFileName(stPHPFile);
+                    bCheckResultIP      = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
+                    bCheckResultSrv     = ToolBox.checkName(stPHPFile);
 
                     //Check if the picture can be send
-                    if (bCheckResultIP == true && bCheckResultStr == true && mCurrentPhotoPath != null) {
+                    if (bCheckResultIP == true && bCheckResultSrv == true && bCheckResultName == true && mCurrentPhotoPath != null) {
                         URL = res.getString(R.string.server_Prefix)
                                 + iByte1IP_Value + '.'
                                 + iByte2IP_Value + '.'
@@ -148,18 +169,22 @@ public class MainActivity extends Activity {
                                 + stPHPFile
                                 + res.getString(R.string.server_Suffix);
 
-                        textView_Result.setText(URL);
 
                         upload();
+
                         iToast2Display = R.string.toast_Upload_File;
-                    } else if (bCheckResultStr == true && bCheckResultIP == false) {
-                        iToast2Display = R.string.toast_Error_In_IP;
-                    } else if (bCheckResultStr == false && bCheckResultIP == true) {
-                        iToast2Display = R.string.toast_Error_In_FileName;
+                    } else if (bCheckResultSrv == true && bCheckResultIP == false) {
+                        iToast2Display          = R.string.toast_Error_In_IP;
+                    } else if (bCheckResultSrv == false && bCheckResultIP == true) {
+                        iToast2Display          = R.string.toast_Error_In_FileName;
                     } else if (mCurrentPhotoPath == null) {
-                        iToast2Display = R.string.toast_No_Picture;
-                    } else {
-                        iToast2Display = R.string.toast_Error_PHP_IP;
+                        iToast2Display          = R.string.toast_No_Picture;
+                    }
+                    else if(iOrder == 1 && bCheckResultName == false){
+                        iToast2Display          = R.string.toast_Invalid_Name;
+                    }
+                    else {
+                        iToast2Display          = R.string.toast_Error_PHP_IP;
                     }
 
                     Toast.makeText(MainActivity.this, iToast2Display, Toast.LENGTH_LONG).show();
@@ -177,16 +202,28 @@ public class MainActivity extends Activity {
         /**
          *  Attach CheckedChangeListener to radio group
          *  */
-     /*   radioGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        radioGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton rb          = (RadioButton) group.findViewById(checkedId);
                 if(null!=rb && checkedId > -1){
+                    stOrder              = rb.getText().toString();
 
+                    //SHow or hide the EditText for names
+                    if(stOrder.equals(res.getString(R.string.radioButton_AddPicture))){
+                        editTextLastName.setVisibility(View.VISIBLE);
+                        editTextFirstName.setVisibility(View.VISIBLE);
+                        iOrder          = 0;
+                    }
+                    else{
+                        editTextLastName.setVisibility(View.INVISIBLE);
+                        editTextFirstName.setVisibility(View.INVISIBLE);
+                        iOrder          = 1;
+                    }
                 }
 
             }
-        });*/
+        });
     }
 
     /**
@@ -202,7 +239,7 @@ public class MainActivity extends Activity {
         ByteArrayOutputStream bao   = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG,90,bao);
         byte[] ba                   = bao.toByteArray();
-        im_64                       = Base64.encodeToString(ba, 0);
+        im_64                       = Base64.encodeToString(ba,0);
 
 
         Log.e("base64", "----" + im_64);
@@ -229,7 +266,7 @@ public class MainActivity extends Activity {
         protected String doInBackground(Void... params) {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("base64", im_64));
-            nameValuePairs.add(new BasicNameValuePair("ImageName", System.currentTimeMillis() + ".jpg"));
+            nameValuePairs.add(new BasicNameValuePair("ImageName", stFileName + ".jpg"));
             try {
                 HttpClient httpclient       = new DefaultHttpClient();
                 HttpPost httppost           = new HttpPost(URL);

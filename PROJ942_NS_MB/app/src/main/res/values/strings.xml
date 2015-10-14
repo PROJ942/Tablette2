@@ -3,7 +3,8 @@
 
 	<!-- String for TextView -->
     <string name="App_Title">Reconnaissance de visages</string>
-	<string name="App_Description">Prenez une photo puis envoyez-la au serveur pour voir si vous êtes déjà dans la base de données !</string>
+	<string name="App_Description">Prenez une photo puis envoyez-la au serveur pour voir si vous êtes déjà dans la base de données !
+	Les chaînes de caractères ne doivent pas contenir de caractères spéciaux (sauf / et _).</string>
     <string name="action_settings">Settings</string>
 	
 	<!-- Strings for buttons -->
@@ -17,8 +18,8 @@
 
 	<!-- Strings for hints -->
 	<string name="hint_Address">Adresse du serveur :</string>
-	<string name="hint_Reco_RadioButton">Reco</string>
-	<string name="hint_Add_RadioButton">Add</string>
+	<string name="hint_Last_Name">Nom</string>
+	<string name="hint_First_Name">Prénom</string>
 
 	<!-- Strings for Toast popups -->
 	<string name="toast_TakePhoto">Vous allez prendre une photo !</string>
@@ -28,6 +29,7 @@
 	<string name="toast_Upload_File">Envoi de la photo</string>
 	<string name="toast_No_Picture">Aucune photo à envoyer.</string>
 	<string name="toast_Empty_Field">Adresse IP ou nom de fichier invalide</string>
+	<string name="toast_Invalid_Name">Nom/Prénom invalide</string>
 
 	<!-- Strings for Server address -->
 	<string name="server_Byte_1">192</string>
