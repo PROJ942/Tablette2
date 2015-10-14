@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class MainActivity extends Activity {
     //Declaration of the layout elements
     public Button               buttonTakePhoto;
     public Button               buttonUploadPhoto;
+    public Button               buttonAddPhoto;
 
     private TextView            textView_Result;
     private TextView            textView_Path;
@@ -56,12 +58,16 @@ public class MainActivity extends Activity {
     private EditText            editTextIPByte4 ;
     private EditText            editTextFileName;
 
+    private RadioGroup          radioGrp;
+
     public Resources res;
 
     //Declaration for intern variables
     private String              mCurrentPhotoPath   = null;
     private String              im_64;
     private String              stPHPFile           = null;
+    private String              stOrder             = null;
+
     private int                 iToast2Display      = 0;
 
     public static String        URL                 = null;
@@ -96,6 +102,8 @@ public class MainActivity extends Activity {
 
         this.mImageView             = (ImageView)this.findViewById(R.id.imageView_Picture);
 
+        this.radioGrp               = (RadioGroup)this.findViewById(R.id.radioGrp);
+
         res                         = getResources();
 
         /**
@@ -115,49 +123,70 @@ public class MainActivity extends Activity {
         buttonUploadPhoto.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //Recover each byte value of the IP
-                iByte1IP_Value      = Integer.parseInt(editTextIPByte1.getText().toString());
-                iByte2IP_Value      = Integer.parseInt(editTextIPByte2.getText().toString());
-                iByte3IP_Value      = Integer.parseInt(editTextIPByte3.getText().toString());
-                iByte4IP_Value      = Integer.parseInt(editTextIPByte4.getText().toString());
+                try {
+                    //Recover each byte value of the IP
+                    iByte1IP_Value = Integer.parseInt(editTextIPByte1.getText().toString());
+                    iByte2IP_Value = Integer.parseInt(editTextIPByte2.getText().toString());
+                    iByte3IP_Value = Integer.parseInt(editTextIPByte3.getText().toString());
+                    iByte4IP_Value = Integer.parseInt(editTextIPByte4.getText().toString());
 
-                stPHPFile           = editTextFileName.getText().toString();
+                    stPHPFile = editTextFileName.getText().toString();
 
-                bCheckResultIP      = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
-                bCheckResultStr     = ToolBox.checkPHPFileName(stPHPFile);
+                    bCheckResultIP = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
+                    bCheckResultStr = ToolBox.checkPHPFileName(stPHPFile);
 
-                bCheckResultIP      = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
-                bCheckResultStr     = ToolBox.checkPHPFileName(stPHPFile);
+                    bCheckResultIP = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
+                    bCheckResultStr = ToolBox.checkPHPFileName(stPHPFile);
 
-                //Check if the picture can be send
-                if(bCheckResultIP == true && bCheckResultStr == true && mCurrentPhotoPath != null){
-                    URL             = res.getString(R.string.server_Prefix)
-                            + res.getString(R.string.server_Byte_1) + '.'
-                            + res.getString(R.string.server_Byte_2) + '.'
-                            + res.getString(R.string.server_Byte_3) + '.'
-                            + res.getString(R.string.server_Byte_4) + '/'
-                            + res.getString(R.string.server_php_File_Name)
-                            + res.getString(R.string.server_Suffix);
-                    textView_Result.setText(URL);
-                    upload();
-                    iToast2Display  = R.string.toast_Upload_File;
-                }
-                else if(bCheckResultStr == true && bCheckResultIP == false){
-                    iToast2Display  = R.string.toast_Error_In_IP;
-                }
-                else if(bCheckResultStr == false && bCheckResultIP == true){
-                    iToast2Display  = R.string.toast_Error_In_FileName;
-                }
-                else if(mCurrentPhotoPath == null){
-                    iToast2Display  = R.string.toast_No_Picture;
-                }
-                else{
-                    iToast2Display  = R.string.toast_Error_PHP_IP;
+                    //Check if the picture can be send
+                    if (bCheckResultIP == true && bCheckResultStr == true && mCurrentPhotoPath != null) {
+                        URL = res.getString(R.string.server_Prefix)
+                                + iByte1IP_Value + '.'
+                                + iByte2IP_Value + '.'
+                                + iByte3IP_Value + '.'
+                                + iByte4IP_Value + '/'
+                                + stPHPFile
+                                + res.getString(R.string.server_Suffix);
+
+                        textView_Result.setText(URL);
+
+                        upload();
+                        iToast2Display = R.string.toast_Upload_File;
+                    } else if (bCheckResultStr == true && bCheckResultIP == false) {
+                        iToast2Display = R.string.toast_Error_In_IP;
+                    } else if (bCheckResultStr == false && bCheckResultIP == true) {
+                        iToast2Display = R.string.toast_Error_In_FileName;
+                    } else if (mCurrentPhotoPath == null) {
+                        iToast2Display = R.string.toast_No_Picture;
+                    } else {
+                        iToast2Display = R.string.toast_Error_PHP_IP;
+                    }
+
+                    Toast.makeText(MainActivity.this, iToast2Display, Toast.LENGTH_LONG).show();
                 }
 
-                Toast.makeText(MainActivity.this, iToast2Display, Toast.LENGTH_LONG).show();
+                //Catch if an EditText is empty
+                catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, R.string.toast_Empty_Field, Toast.LENGTH_LONG).show();
+                }
             }
+
         });
+
+        /**
+         *  Attach CheckedChangeListener to radio group
+         *  */
+     /*   radioGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb          = (RadioButton) group.findViewById(checkedId);
+                if(null!=rb && checkedId > -1){
+
+                }
+
+            }
+        });*/
     }
 
     /**
@@ -175,11 +204,11 @@ public class MainActivity extends Activity {
         byte[] ba                   = bao.toByteArray();
         im_64                       = Base64.encodeToString(ba, 0);
 
+
         Log.e("base64", "----" + im_64);
 
         //Upload image to server
         new uploadToServer().execute();
-
     }
 
     /**
@@ -191,6 +220,7 @@ public class MainActivity extends Activity {
 
         protected void onPreExecute() {
             super.onPreExecute();
+
             dialog.setMessage("Image Uploading !");
             dialog.show();
         }

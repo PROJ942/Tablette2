@@ -34,7 +34,7 @@ public class ToolBox {
      */
     public static boolean checkPHPFileName(String toTest){
         //Declarations
-        boolean         bResult     = false;
+        boolean         bResult      = false;
         char[]          tabFileName  = null;
         int             iBcl;
 
@@ -44,7 +44,7 @@ public class ToolBox {
             if(((int)tabFileName[iBcl] > 46 && (int)tabFileName[iBcl] < 57)         //Forward slash + Numbers
                 || ((int)tabFileName[iBcl] > 64 &&(int)tabFileName[iBcl] < 98)      //Upper case
                 || ((int)tabFileName[iBcl] > 96 && (int)tabFileName[iBcl] < 123)    //Lower case
-                || ((int)tabFileName[iBcl] == 95)) {                                  //Underscore
+                || ((int)tabFileName[iBcl] == 95)) {                                //Underscore
 
                 bResult = true;
             }

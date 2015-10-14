@@ -9,10 +9,16 @@
 	<!-- Strings for buttons -->
 	<string name="buttonText_TakePicture">Prendre une nouvelle photo</string>
 	<string name="buttonText_LogInTest">Test connexion</string>
-	<string name="buttonText_SendPicture">Envoyer la photo</string>
+	<string name="buttonText_SendPicture">Envoyer une photo</string>
+	
+	<!-- Strings for radioButtons -->
+	<string name="radioButton_AddPicture">Ajouter un visage</string>
+	<string name="radioButton_FaceRecognition">Reconnaître un visage</string>
 
 	<!-- Strings for hints -->
-	<string name="hint_Address">Adresse serveur</string>
+	<string name="hint_Address">Adresse du serveur :</string>
+	<string name="hint_Reco_RadioButton">Reco</string>
+	<string name="hint_Add_RadioButton">Add</string>
 
 	<!-- Strings for Toast popups -->
 	<string name="toast_TakePhoto">Vous allez prendre une photo !</string>
@@ -21,14 +27,15 @@
 	<string name="toast_Error_PHP_IP">Adresse IP et Nom fichier PHP invalides</string>
 	<string name="toast_Upload_File">Envoi de la photo</string>
 	<string name="toast_No_Picture">Aucune photo à envoyer.</string>
+	<string name="toast_Empty_Field">Adresse IP ou nom de fichier invalide</string>
 
 	<!-- Strings for Server address -->
 	<string name="server_Byte_1">192</string>
 	<string name="server_Byte_2">168</string>
-	<string name="server_Byte_3">164</string>
-	<string name="server_Byte_4">1</string>
+	<string name="server_Byte_3">119</string>
+	<string name="server_Byte_4">212</string>
 	<string name="server_Prefix">http://</string>
 	<string name="server_Suffix">.php</string>
-	<string name="server_php_File_Name">uploads/server</string>
+	<string name="server_php_File_Name">server_2</string>
 	
 </resources>
