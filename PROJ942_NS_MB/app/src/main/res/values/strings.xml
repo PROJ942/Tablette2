@@ -19,17 +19,16 @@
 	<!-- Strings for hints -->
 	<string name="hint_Address">Adresse du serveur :</string>
 	<string name="hint_Last_Name">Nom</string>
-	<string name="hint_First_Name">Prénom</string>
+	<string name="hint_First_Name">Prenom</string>
 
 	<!-- Strings for Toast popups -->
 	<string name="toast_TakePhoto">Vous allez prendre une photo !</string>
-	<string name="toast_Error_In_IP">Adresse IP invalide</string>
-	<string name="toast_Error_In_FileName">Nom fichier PHP invalide</string>
-	<string name="toast_Error_PHP_IP">Adresse IP et Nom fichier PHP invalides</string>
+	<string name="toast_Error_In_IP">adresse IP</string>
+	<string name="toast_Error_In_FileName">nom fichier PHP</string>
 	<string name="toast_Upload_File">Envoi de la photo</string>
 	<string name="toast_No_Picture">Aucune photo à envoyer.</string>
-	<string name="toast_Empty_Field">Adresse IP ou nom de fichier invalide</string>
-	<string name="toast_Invalid_Name">Nom/Prénom invalide</string>
+	<string name="toast_Invalid_Name">nom-prénom</string>
+	<string name="toast_Empty_Field">Un champ a été laissé vide</string>
 
 	<!-- Strings for Server address -->
 	<string name="server_Byte_1">192</string>

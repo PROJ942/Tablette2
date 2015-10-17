@@ -38,19 +38,19 @@ public class ToolBox {
         char[]          tabFileName  = null;
         int             iBcl;
 
-        tabFileName     = toTest.toCharArray();
+        if(toTest.length() != 0) {
+            tabFileName = toTest.toCharArray();
 
-        for(iBcl = 0; iBcl<tabFileName.length; iBcl++){
-            if(((int)tabFileName[iBcl] > 46 && (int)tabFileName[iBcl] < 57)         //Forward slash + Numbers
-                || ((int)tabFileName[iBcl] > 64 &&(int)tabFileName[iBcl] < 98)      //Upper case
-                || ((int)tabFileName[iBcl] > 96 && (int)tabFileName[iBcl] < 123)    //Lower case
-                || ((int)tabFileName[iBcl] == 95)) {                                //Underscore
+            for (iBcl = 0; iBcl < tabFileName.length; iBcl++) {
+                if (((int) tabFileName[iBcl] > 46 && (int) tabFileName[iBcl] < 57)         //Forward slash + Numbers
+                        || ((int) tabFileName[iBcl] > 64 && (int) tabFileName[iBcl] < 98)      //Upper case
+                        || ((int) tabFileName[iBcl] > 96 && (int) tabFileName[iBcl] < 123)    //Lower case
+                        || ((int) tabFileName[iBcl] == 95)) {                                //Underscore
 
-                bResult = true;
-            }
-
-            else {
-                bResult = false;
+                    bResult = true;
+                } else {
+                    bResult = false;
+                }
             }
         }
         return bResult;

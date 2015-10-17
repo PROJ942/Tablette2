@@ -71,8 +71,10 @@ public class MainActivity extends Activity {
     private String              stPHPFile           = null;
     private String              stFileName          = null;
     private String              stOrder             = null;
+    private String              stToast2Display     = null;
+    private String              stFirstName         = null;
+    private String              stLastName          = null;
 
-    private int                 iToast2Display      = 0;
     private int                 iOrder              = 0;
 
     public static String        URL                 = null;
@@ -86,7 +88,8 @@ public class MainActivity extends Activity {
 
     public boolean              bCheckResultIP ;
     public boolean              bCheckResultSrv ;
-    public boolean              bCheckResultName;
+    public boolean              bCheckResultFirstName;
+    public boolean              bCheckResultLastName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,57 +140,72 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 try {
                     //Recover each byte value of the IP
-                    iByte1IP_Value      = Integer.parseInt(editTextIPByte1.getText().toString());
-                    iByte2IP_Value      = Integer.parseInt(editTextIPByte2.getText().toString());
-                    iByte3IP_Value      = Integer.parseInt(editTextIPByte3.getText().toString());
-                    iByte4IP_Value      = Integer.parseInt(editTextIPByte4.getText().toString());
+                    iByte1IP_Value = Integer.parseInt(editTextIPByte1.getText().toString());
+                    iByte2IP_Value = Integer.parseInt(editTextIPByte2.getText().toString());
+                    iByte3IP_Value = Integer.parseInt(editTextIPByte3.getText().toString());
+                    iByte4IP_Value = Integer.parseInt(editTextIPByte4.getText().toString());
 
-                    //Build the file name depending on the order
-                    if(iOrder == 0){
-                        stFileName = String.valueOf(System.currentTimeMillis());
-                    }
-                    else{
-
-                        stFileName          = "Add_" + editTextFirstName.getText().toString() + "_" + editTextLastName.getText().toString();
-                        bCheckResultName    = ToolBox.checkName(stFileName);
-                    }
-
-                    Log.e("test", stFileName);
+                    stFirstName = editTextFirstName.getText().toString();
+                    stLastName = editTextLastName.getText().toString();
 
                     stPHPFile = editTextFileName.getText().toString();
 
-                    bCheckResultIP      = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
-                    bCheckResultSrv     = ToolBox.checkName(stPHPFile);
+                    bCheckResultIP = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
+                    bCheckResultSrv = ToolBox.checkName(stPHPFile);
+                    bCheckResultFirstName = ToolBox.checkName(stFirstName);
+                    bCheckResultLastName = ToolBox.checkName(stLastName);
 
-                    //Check if the picture can be send
-                    if (bCheckResultIP == true && bCheckResultSrv == true && bCheckResultName == true && mCurrentPhotoPath != null) {
-                        URL = res.getString(R.string.server_Prefix)
-                                + iByte1IP_Value + '.'
-                                + iByte2IP_Value + '.'
-                                + iByte3IP_Value + '.'
-                                + iByte4IP_Value + '/'
-                                + stPHPFile
-                                + res.getString(R.string.server_Suffix);
+                    if (mCurrentPhotoPath != null) {
+                        //Check if the picture can be send
+                        boolean bCond = bCheckResultIP && bCheckResultSrv && (iOrder == 0 || (iOrder == 1 && bCheckResultFirstName && bCheckResultLastName));
+                        textView_Result.setText("cond = " + String.valueOf(bCond));
 
+                        if (bCond == false) {
+                            stToast2Display = "Attention : ";
+                            if (bCheckResultIP == false) {
+                                stToast2Display = stToast2Display + "\n" + getResources().getString(R.string.toast_Error_In_IP);
+                            }
 
-                        upload();
+                            if (bCheckResultSrv == false) {
+                                stToast2Display = stToast2Display + "\n" + getResources().getString(R.string.toast_Error_In_FileName);
+                            }
 
-                        iToast2Display = R.string.toast_Upload_File;
-                    } else if (bCheckResultSrv == true && bCheckResultIP == false) {
-                        iToast2Display          = R.string.toast_Error_In_IP;
-                    } else if (bCheckResultSrv == false && bCheckResultIP == true) {
-                        iToast2Display          = R.string.toast_Error_In_FileName;
-                    } else if (mCurrentPhotoPath == null) {
-                        iToast2Display          = R.string.toast_No_Picture;
+                            if (iOrder == 1 && (bCheckResultFirstName == false || bCheckResultLastName == false)) {
+                                stToast2Display = stToast2Display + "\n" +
+                                        "" + getResources().getString(R.string.toast_Invalid_Name);
+                            }
+
+                            stToast2Display = stToast2Display + " invalide(s)";
+                        }
+
+                        else {
+                            URL = res.getString(R.string.server_Prefix)
+                                    + iByte1IP_Value + '.'
+                                    + iByte2IP_Value + '.'
+                                    + iByte3IP_Value + '.'
+                                    + iByte4IP_Value + '/'
+                                    + stPHPFile
+                                    + res.getString(R.string.server_Suffix);
+
+                            //Build the file name depending on the order
+                            if (iOrder == 0) {
+                                stFileName = String.valueOf(System.currentTimeMillis());
+                            } else {
+                                stFileName = "Add_" + stFirstName + "_" + stLastName;
+                            }
+                            textView_Result.setText("file name = " + stFileName);
+
+                            upload();
+
+                            stToast2Display = getResources().getString(R.string.toast_Upload_File);
+
+                        }
                     }
-                    else if(iOrder == 1 && bCheckResultName == false){
-                        iToast2Display          = R.string.toast_Invalid_Name;
-                    }
-                    else {
-                        iToast2Display          = R.string.toast_Error_PHP_IP;
+                    else{
+                        stToast2Display     = getResources().getString(R.string.toast_No_Picture);
                     }
 
-                    Toast.makeText(MainActivity.this, iToast2Display, Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, stToast2Display, Toast.LENGTH_LONG).show();
                 }
 
                 //Catch if an EditText is empty
@@ -213,12 +231,12 @@ public class MainActivity extends Activity {
                     if(stOrder.equals(res.getString(R.string.radioButton_AddPicture))){
                         editTextLastName.setVisibility(View.VISIBLE);
                         editTextFirstName.setVisibility(View.VISIBLE);
-                        iOrder          = 0;
+                        iOrder          = 1;
                     }
                     else{
                         editTextLastName.setVisibility(View.INVISIBLE);
                         editTextFirstName.setVisibility(View.INVISIBLE);
-                        iOrder          = 1;
+                        iOrder          = 0;
                     }
                 }
 
@@ -266,7 +284,7 @@ public class MainActivity extends Activity {
         protected String doInBackground(Void... params) {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("base64", im_64));
-            nameValuePairs.add(new BasicNameValuePair("ImageName", stFileName + ".jpg"));
+            nameValuePairs.add(new BasicNameValuePair("ImageName", "toto.tata" + ".jpg"));
             try {
                 HttpClient httpclient       = new DefaultHttpClient();
                 HttpPost httppost           = new HttpPost(URL);
