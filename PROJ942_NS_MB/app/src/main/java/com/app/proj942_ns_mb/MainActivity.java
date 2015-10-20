@@ -31,6 +31,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -85,6 +87,7 @@ public class MainActivity extends Activity {
     private int                 iByte2IP_Value ;
     private int                 iByte3IP_Value ;
     private int                 iByte4IP_Value ;
+    private int                 connectionTimeoutMillis = 50000;
 
     public boolean              bCheckResultIP ;
     public boolean              bCheckResultSrv ;
@@ -285,6 +288,8 @@ public class MainActivity extends Activity {
 
             try {
                 HttpClient httpclient       = new DefaultHttpClient();
+                HttpParams httpParams       = httpclient.getParams();
+                HttpConnectionParams.setConnectionTimeout(httpParams, connectionTimeoutMillis);
                 HttpPost httppost           = new HttpPost(URL);
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response       = httpclient.execute(httppost);
