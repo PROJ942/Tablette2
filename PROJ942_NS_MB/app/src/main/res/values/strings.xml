@@ -38,6 +38,6 @@
 	<string name="server_Byte_4">212</string>
 	<string name="server_Prefix">http://</string>
 	<string name="server_Suffix">.php</string>
-	<string name="server_php_File_Name">server_2</string>
+	<string name="server_php_File_Name">server2</string>
 	
 </resources>

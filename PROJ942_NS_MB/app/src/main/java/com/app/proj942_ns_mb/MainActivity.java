@@ -29,7 +29,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
@@ -313,6 +312,9 @@ public class MainActivity extends Activity {
             dialog.hide();
             dialog.dismiss();
 
+            buttonTakePhoto.setEnabled(false);
+            buttonUploadPhoto.setEnabled(false);
+
             if(stHttpAnswer != null){
                 textView_Result.setText(stHttpAnswer);
             }
@@ -334,6 +336,10 @@ public class MainActivity extends Activity {
         CharSequence textViewContent    = textView_Result.getText();
         outState.putCharSequence("savedTextResult", textViewContent);
 
+        //Store the button's state
+        outState.putBoolean("buttonPictureState", buttonTakePhoto.isEnabled());
+        outState.putBoolean("buttonUploadState", buttonUploadPhoto.isEnabled());
+
     }
 
     /**
@@ -349,6 +355,9 @@ public class MainActivity extends Activity {
 
         CharSequence textViewContent    = savedInstanceState.getCharSequence("savedTextResult");
         textView_Result.setText(textViewContent);
+
+        buttonTakePhoto.setEnabled(savedInstanceState.getBoolean("buttonPictureState"));
+        buttonUploadPhoto.setEnabled(savedInstanceState.getBoolean("buttonUploadState"));
 
         //Recover the picture's path and load the picture
         mCurrentPhotoPath               = String.valueOf(textView_Path.getText());
