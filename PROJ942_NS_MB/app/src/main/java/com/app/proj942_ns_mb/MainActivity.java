@@ -29,6 +29,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
@@ -87,7 +88,7 @@ public class MainActivity extends Activity {
     private int                 iByte2IP_Value ;
     private int                 iByte3IP_Value ;
     private int                 iByte4IP_Value ;
-    private int                 connectionTimeoutMillis = 50000;
+    private int                 connectionTimeoutMillis = 50000;        //Default TimeOut in ms
 
     public boolean              bCheckResultIP ;
     public boolean              bCheckResultSrv ;
@@ -301,6 +302,7 @@ public class MainActivity extends Activity {
 
             } catch (Exception e) {
                 Log.v("log_tag", "Error in http connection " + e.toString());
+                stHttpAnswer = getResources().getString(R.string.serverTimeOutHttpConnection);
             }
             return stHttpAnswer;
 

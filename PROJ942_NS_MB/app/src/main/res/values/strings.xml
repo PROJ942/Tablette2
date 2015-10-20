@@ -6,6 +6,7 @@
 	<string name="App_Description">Prenez une photo puis envoyez-la au serveur pour voir si vous êtes déjà dans la base de données !
 	Les chaînes de caractères ne doivent pas contenir de caractères spéciaux (sauf / et _).</string>
     <string name="action_settings">Settings</string>
+	<string name="serverTimeOutHttpConnection">Connection Timed Out !</string>
 	
 	<!-- Strings for buttons -->
 	<string name="buttonText_TakePicture">Prendre une nouvelle photo</string>
