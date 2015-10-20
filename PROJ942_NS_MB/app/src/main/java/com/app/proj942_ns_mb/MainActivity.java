@@ -46,7 +46,6 @@ public class MainActivity extends Activity {
     //Declaration of the layout elements
     public Button               buttonTakePhoto;
     public Button               buttonUploadPhoto;
-    public Button               buttonAddPhoto;
 
     private TextView            textView_Result;
     private TextView            textView_Path;
@@ -74,6 +73,7 @@ public class MainActivity extends Activity {
     private String              stToast2Display     = null;
     private String              stFirstName         = null;
     private String              stLastName          = null;
+    private String              stHttpAnswer        = null;
 
     private int                 iOrder              = 0;
 
@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
 
         /*-------- Set links for the components --------*/
         this.textView_Path          = (TextView) this.findViewById(R.id.textView_Path);
-        this.textView_Result        = (TextView)this.findViewById(R.id.textView_Result);
+        this.textView_Result        =  (TextView)this.findViewById(R.id.textView_Result);
 
         this.buttonTakePhoto        = (Button)this.findViewById(R.id.button_TakePicture);
         this.buttonUploadPhoto      = (Button)this.findViewById(R.id.buttonUploadPhoto);
@@ -140,39 +140,37 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 try {
                     //Recover each byte value of the IP
-                    iByte1IP_Value = Integer.parseInt(editTextIPByte1.getText().toString());
-                    iByte2IP_Value = Integer.parseInt(editTextIPByte2.getText().toString());
-                    iByte3IP_Value = Integer.parseInt(editTextIPByte3.getText().toString());
-                    iByte4IP_Value = Integer.parseInt(editTextIPByte4.getText().toString());
+                    iByte1IP_Value          = Integer.parseInt(editTextIPByte1.getText().toString());
+                    iByte2IP_Value          = Integer.parseInt(editTextIPByte2.getText().toString());
+                    iByte3IP_Value          = Integer.parseInt(editTextIPByte3.getText().toString());
+                    iByte4IP_Value          = Integer.parseInt(editTextIPByte4.getText().toString());
 
-                    stFirstName = editTextFirstName.getText().toString();
-                    stLastName = editTextLastName.getText().toString();
+                    stFirstName             = editTextFirstName.getText().toString();
+                    stLastName              = editTextLastName.getText().toString();
 
-                    stPHPFile = editTextFileName.getText().toString();
+                    stPHPFile               = editTextFileName.getText().toString();
 
-                    bCheckResultIP = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
-                    bCheckResultSrv = ToolBox.checkName(stPHPFile);
-                    bCheckResultFirstName = ToolBox.checkName(stFirstName);
-                    bCheckResultLastName = ToolBox.checkName(stLastName);
+                    bCheckResultIP          = ToolBox.checkIP(iByte1IP_Value, iByte2IP_Value, iByte3IP_Value, iByte4IP_Value);
+                    bCheckResultSrv         = ToolBox.checkName(stPHPFile);
+                    bCheckResultFirstName   = ToolBox.checkName(stFirstName);
+                    bCheckResultLastName    = ToolBox.checkName(stLastName);
 
                     if (mCurrentPhotoPath != null) {
                         //Check if the picture can be send
-                        boolean bCond = bCheckResultIP && bCheckResultSrv && (iOrder == 0 || (iOrder == 1 && bCheckResultFirstName && bCheckResultLastName));
-                        textView_Result.setText("cond = " + String.valueOf(bCond));
+                        boolean bCond       = bCheckResultIP && bCheckResultSrv && (iOrder == 0 || (iOrder == 1 && bCheckResultFirstName && bCheckResultLastName));
 
                         if (bCond == false) {
                             stToast2Display = "Attention : ";
                             if (bCheckResultIP == false) {
-                                stToast2Display = stToast2Display + "\n" + getResources().getString(R.string.toast_Error_In_IP);
+                                stToast2Display     = stToast2Display + "\n" + getResources().getString(R.string.toast_Error_In_IP);
                             }
 
                             if (bCheckResultSrv == false) {
-                                stToast2Display = stToast2Display + "\n" + getResources().getString(R.string.toast_Error_In_FileName);
+                                stToast2Display     = stToast2Display + "\n" + getResources().getString(R.string.toast_Error_In_FileName);
                             }
 
                             if (iOrder == 1 && (bCheckResultFirstName == false || bCheckResultLastName == false)) {
-                                stToast2Display = stToast2Display + "\n" +
-                                        "" + getResources().getString(R.string.toast_Invalid_Name);
+                                stToast2Display     = stToast2Display + "\n" + getResources().getString(R.string.toast_Invalid_Name);
                             }
 
                             stToast2Display = stToast2Display + " invalide(s)";
@@ -189,20 +187,19 @@ public class MainActivity extends Activity {
 
                             //Build the file name depending on the order
                             if (iOrder == 0) {
-                                stFileName = String.valueOf(System.currentTimeMillis());
+                                stFileName          = String.valueOf(System.currentTimeMillis());
                             } else {
-                                stFileName = "Add_" + stFirstName + "_" + stLastName;
+                                stFileName          = "Add_" + stFirstName + "_" + stLastName;
                             }
-                            textView_Result.setText("file name = " + stFileName);
 
                             upload();
 
-                            stToast2Display = getResources().getString(R.string.toast_Upload_File);
+                            stToast2Display         = getResources().getString(R.string.toast_Upload_File);
 
                         }
                     }
                     else{
-                        stToast2Display     = getResources().getString(R.string.toast_No_Picture);
+                        stToast2Display             = getResources().getString(R.string.toast_No_Picture);
                     }
 
                         Toast.makeText(MainActivity.this, stToast2Display, Toast.LENGTH_LONG).show();
@@ -284,14 +281,17 @@ public class MainActivity extends Activity {
         protected String doInBackground(Void... params) {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("base64", im_64));
-            nameValuePairs.add(new BasicNameValuePair("ImageName", "toto.tata" + ".jpg"));
+            nameValuePairs.add(new BasicNameValuePair("ImageName", stFileName + ".jpg"));
             try {
                 HttpClient httpclient       = new DefaultHttpClient();
                 HttpPost httppost           = new HttpPost(URL);
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response        = httpclient.execute(httppost);
-                String st                    = EntityUtils.toString(response.getEntity());
+                HttpResponse response       = httpclient.execute(httppost);
+                String st                   = EntityUtils.toString(response.getEntity());
                 Log.v("log_tag", "In the try Loop" + st);
+
+                stHttpAnswer                = ToolBox.translateHTTPAnswer(st);
+
 
             } catch (Exception e) {
                 Log.v("log_tag", "Error in http connection " + e.toString());
@@ -317,6 +317,7 @@ public class MainActivity extends Activity {
         //Store the picture's path
         CharSequence picturePath        = textView_Path.getText();
         outState.putCharSequence("savedPicturePath", picturePath);
+
     }
 
     /**

@@ -56,4 +56,10 @@ public class ToolBox {
         return bResult;
     }
 
+    public static String translateHTTPAnswer(String stReceived){
+        String stResult         = null;
+        stResult        = stReceived.substring(5, stReceived.length() - 6);
+        return stResult;
+    }
+
 }

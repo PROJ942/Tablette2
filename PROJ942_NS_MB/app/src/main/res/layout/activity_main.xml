@@ -193,7 +193,8 @@
                 android:layout_marginRight="@dimen/padding_small"
                 android:layout_marginBottom="@dimen/padding_small"
                 android:textColor="@color/color_Text_Body"
-                android:textSize="@dimen/size_TextView_Body" />
+                android:textSize="@dimen/size_TextView_Body"
+                android:checked="false" />
 
         </RadioGroup>
 
