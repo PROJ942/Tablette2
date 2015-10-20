@@ -282,6 +282,7 @@ public class MainActivity extends Activity {
             ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("base64", im_64));
             nameValuePairs.add(new BasicNameValuePair("ImageName", stFileName + ".jpg"));
+
             try {
                 HttpClient httpclient       = new DefaultHttpClient();
                 HttpPost httppost           = new HttpPost(URL);
@@ -296,7 +297,7 @@ public class MainActivity extends Activity {
             } catch (Exception e) {
                 Log.v("log_tag", "Error in http connection " + e.toString());
             }
-            return "Success";
+            return stHttpAnswer;
 
         }
 
@@ -304,6 +305,10 @@ public class MainActivity extends Activity {
             super.onPostExecute(result);
             dialog.hide();
             dialog.dismiss();
+
+            if(stHttpAnswer != null){
+                textView_Result.setText(stHttpAnswer);
+            }
         }
     }
 
@@ -318,6 +323,10 @@ public class MainActivity extends Activity {
         CharSequence picturePath        = textView_Path.getText();
         outState.putCharSequence("savedPicturePath", picturePath);
 
+        //Store the textViewResult
+        CharSequence textViewContent    = textView_Result.getText();
+        outState.putCharSequence("savedTextResult", textViewContent);
+
     }
 
     /**
@@ -330,6 +339,9 @@ public class MainActivity extends Activity {
 
         CharSequence picturePath        = savedInstanceState.getCharSequence("savedPicturePath");
         textView_Path.setText(picturePath);
+
+        CharSequence textViewContent    = savedInstanceState.getCharSequence("savedTextResult");
+        textView_Result.setText(textViewContent);
 
         //Recover the picture's path and load the picture
         mCurrentPhotoPath               = String.valueOf(textView_Path.getText());
