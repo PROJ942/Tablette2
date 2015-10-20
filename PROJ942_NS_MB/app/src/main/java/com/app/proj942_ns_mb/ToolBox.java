@@ -1,5 +1,8 @@
 package com.app.proj942_ns_mb;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by Sarion on 13/10/2015.
  */
@@ -42,10 +45,14 @@ public class ToolBox {
             tabFileName = toTest.toCharArray();
 
             for (iBcl = 0; iBcl < tabFileName.length; iBcl++) {
-                if (((int) tabFileName[iBcl] > 46 && (int) tabFileName[iBcl] < 57)         //Forward slash + Numbers
+                if (((int) tabFileName[iBcl] > 46 && (int) tabFileName[iBcl] < 57)              //Forward slash + Numbers
                         || ((int) tabFileName[iBcl] > 64 && (int) tabFileName[iBcl] < 98)      //Upper case
                         || ((int) tabFileName[iBcl] > 96 && (int) tabFileName[iBcl] < 123)    //Lower case
-                        || ((int) tabFileName[iBcl] == 95)) {                                //Underscore
+                        || ((int) tabFileName[iBcl] == 95)                                    //Underscore
+                        || ((int) tabFileName[iBcl] == 32)                                    //Space
+                        || ((int) tabFileName[iBcl] == 45)                                      //Dash or minus
+                        )
+                {
 
                     bResult = true;
                 } else {
@@ -58,7 +65,12 @@ public class ToolBox {
 
     public static String translateHTTPAnswer(String stReceived){
         String stResult         = null;
-        stResult        = stReceived.substring(5, stReceived.length() - 6);
+
+        Calendar cal            = Calendar.getInstance();
+        SimpleDateFormat sdf    = new SimpleDateFormat("HH:mm:ss");
+        stResult                = sdf.format(cal.getTime());
+        stResult                = stResult + " " + stReceived.substring(5, stReceived.length() - 6);
+
         return stResult;
     }
 
