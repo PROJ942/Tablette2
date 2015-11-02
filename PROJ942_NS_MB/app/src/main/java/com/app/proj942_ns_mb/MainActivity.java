@@ -1,7 +1,9 @@
 package com.app.proj942_ns_mb;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -93,6 +95,7 @@ public class MainActivity extends Activity {
     public boolean              bCheckResultSrv ;
     public boolean              bCheckResultFirstName;
     public boolean              bCheckResultLastName;
+    public boolean              isReadyToSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,10 +197,31 @@ public class MainActivity extends Activity {
                             } else {
                                 stFileName          = "Add_" + stFirstName + "_" + stLastName;
                             }
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                            alertDialog.setTitle("Envoi de l'image...");
+                            alertDialog.setMessage("Etes-vous sûr d'envoyer cette image au serveur ?");
+                            alertDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    isReadyToSend = true;
+                                    upload();
+                                    stToast2Display = getResources().getString(R.string.toast_Upload_File);
+                                    Toast.makeText(getApplicationContext(),
+                                            "Vous avez cliqué sur Oui", Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+                            });
+                            alertDialog.setNeutralButton("Non",
+                                    new DialogInterface.OnClickListener() {
 
-                            upload();
-
-                            stToast2Display         = getResources().getString(R.string.toast_Upload_File);
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            isReadyToSend = false;
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Vous avez cliqué sur Non", Toast.LENGTH_SHORT)
+                                                    .show();
+                                        }
+                                    });
+                            alertDialog.show();
 
                         }
                     }
@@ -278,6 +302,7 @@ public class MainActivity extends Activity {
 
             dialog.setMessage("Image Uploading !");
             dialog.show();
+
         }
 
         @Override
@@ -292,7 +317,7 @@ public class MainActivity extends Activity {
                 HttpConnectionParams.setConnectionTimeout(httpParams, connectionTimeoutMillis);
                 HttpPost httppost           = new HttpPost(URL);
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response       = httpclient.execute(httppost);
+                HttpResponse response       = httpclient.execute(httppost);                     //message sent by the server back to the client after having received and interpreted a request message
                 String st                   = EntityUtils.toString(response.getEntity());
                 Log.v("log_tag", "In the try Loop" + st);
 
@@ -363,7 +388,7 @@ public class MainActivity extends Activity {
         mCurrentPhotoPath               = String.valueOf(textView_Path.getText());
         Bitmap bMap                     = BitmapFactory.decodeFile(mCurrentPhotoPath);
         mImageView.setImageBitmap(bMap);
-        mImageView.setRotation(90);
+        //mImageView.setRotation(90);
     }
 
     /**
@@ -393,7 +418,7 @@ public class MainActivity extends Activity {
             ImageView mImageView        = (ImageView) findViewById(R.id.imageView_Picture);
             Bitmap bMap                 = BitmapFactory.decodeFile(mCurrentPhotoPath);
             mImageView.setImageBitmap(bMap);
-            mImageView.setRotation(90);
+            //mImageView.setRotation(90);
         }
     }
 
