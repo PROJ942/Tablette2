@@ -39,5 +39,14 @@
 	<string name="server_Prefix">http://</string>
 	<string name="server_Suffix">.php</string>
 	<string name="server_php_File_Name">server2</string>
+
+	<!-- Strings for Dialog box -->
+	<string name="dialog_Send_Picture">Envoi de l\'image...</string>
+	<string name="dialog_Ask_Before_Send">Etes-vous sûr d\'envoyer cette image au serveur ?</string>
+	<string name="dialog_Yes">Oui</string>
+	<string name="dialog_Yes_Clicked">Vous avez cliqué sur Oui</string>
+	<string name="dialog_No">Non</string>
+	<string name="dialog_No_Clicked">Vous avez cliqué sur Non</string>
+
 	
 </resources>

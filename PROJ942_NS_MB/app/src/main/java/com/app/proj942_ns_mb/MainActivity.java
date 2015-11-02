@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -197,27 +198,28 @@ public class MainActivity extends Activity {
                             } else {
                                 stFileName          = "Add_" + stFirstName + "_" + stLastName;
                             }
+
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-                            alertDialog.setTitle("Envoi de l'image...");
-                            alertDialog.setMessage("Etes-vous sûr d'envoyer cette image au serveur ?");
-                            alertDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                            alertDialog.setTitle(res.getString(R.string.dialog_Send_Picture));
+                            alertDialog.setMessage(res.getString(R.string.dialog_Ask_Before_Send));
+                            alertDialog.setPositiveButton(res.getString(R.string.dialog_Yes), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     isReadyToSend = true;
                                     upload();
                                     stToast2Display = getResources().getString(R.string.toast_Upload_File);
                                     Toast.makeText(getApplicationContext(),
-                                            "Vous avez cliqué sur Oui", Toast.LENGTH_SHORT)
+                                            res.getString(R.string.dialog_Yes_Clicked), Toast.LENGTH_SHORT)
                                             .show();
                                 }
                             });
-                            alertDialog.setNeutralButton("Non",
+                            alertDialog.setNeutralButton(res.getString(R.string.dialog_No),
                                     new DialogInterface.OnClickListener() {
 
                                         public void onClick(DialogInterface dialog, int which) {
                                             isReadyToSend = false;
                                             Toast.makeText(getApplicationContext(),
-                                                    "Vous avez cliqué sur Non", Toast.LENGTH_SHORT)
+                                                    res.getString(R.string.dialog_No_Clicked), Toast.LENGTH_SHORT)
                                                     .show();
                                         }
                                     });
@@ -419,6 +421,7 @@ public class MainActivity extends Activity {
             Bitmap bMap                 = BitmapFactory.decodeFile(mCurrentPhotoPath);
             mImageView.setImageBitmap(bMap);
             //mImageView.setRotation(90);
+
         }
     }
 
